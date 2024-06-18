@@ -1,0 +1,17 @@
+name: Test Repository Dispatch
+
+on:
+  repository_dispatch:
+    types: [cx-ci-trigger]
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.client_payload.ref }}    
+      - name: Run a Script
+        run: echo "Repository dispatch event triggered"
+      - name: Print out payload
+        run: echo '${{ toJson(github.event.client_payload) }}'
